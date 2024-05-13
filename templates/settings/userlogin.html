@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoothie Shop : user login</title>
+    <script src="/static/js/bootstrap@5.3.3.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap@5.3.3.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+
+    <script src="/static/js/jQueryTable.js"></script>
+    <script src="/static/js/JSTable.js"></script>
+    <link rel="stylesheet" href="/static/css/CSSTable.css">
+</head>
+
+<body>
+
+    {% include 'nav.html' %}
+
+    <div class="container mt-3">
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Add User
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add User</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form action="/settings/userlogin/addUser" method="POST">
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">User ID</label>
+                                <input type="text" class="form-control" id="exampleFormControlInput1"
+                                    placeholder="User ID" name="userId" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="exampleFormControlInput1"
+                                    placeholder="Password" name="password" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Level</label>
+                                <select class="form-select" aria-label="Default select example" name="level" required>
+                                    <option selected>Open this select menu</option>
+                                    {% for list in data_list_level %}
+                                    <option value="{{list[0]}}">{{list[0]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success" style="width: 80px;">OK</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+        <table id="myTable" class="display" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Level</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in data1 %}
+                <tr>
+                    <td>{{data[0]}}</td>
+                    <td>{{data[1]}}</td>
+                    {% if data[2] == "enable" %}
+                    <td class="text-bg-success">{{data[2]}}</td>
+                    {% endif %}
+                    {% if data[2] == "disable" %}
+                    <td class="text-bg-secondary">{{data[2]}}</td>
+                    {% endif %}
+                    <td>
+                        <a class="icon-link me-3" href="#">
+                            <img src="/static/img/icon/search.svg" alt="">
+                        </a>
+                        <a class="icon-link" href="#">
+                            <img src="/static/img/icon/trash.svg" alt="">
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+            $(document).ready(function () {
+                $("#myTable").DataTable();
+            });
+        </script>
+
+    </div>
+
+</body>
+
+</html>

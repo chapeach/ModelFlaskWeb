@@ -23,8 +23,10 @@ def Fn_login():
             data1 = data1.fetchall()
             data1 = list(data1[0])
 
+            con.close()
+
             if len(data1) == 5:
-                if data1[4] == "1":
+                if data1[4] == "enable":
                     session['UserId'] = data1[1]
                     session['Password'] = data1[2]
                     session['Level'] = data1[3]
@@ -33,3 +35,9 @@ def Fn_login():
         except:
             pass
     return redirect("/")
+
+@app_login.route('/fn_logout')
+def Fn_logout():
+    session.clear()
+    print(session)
+    return redirect("/login")
